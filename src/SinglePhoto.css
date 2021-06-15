@@ -1,0 +1,5 @@
+.photo > img {
+  width: 22rem;
+  height: 25rem;
+  object-fit: cover;
+}
