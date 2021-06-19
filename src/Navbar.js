@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "./images/logo.png";
 import "./Navbar.css";
 import { BsSearch } from "react-icons/bs";
@@ -9,7 +9,17 @@ const Navbar = () => {
   const { queryUrl, fetchImages } = useGlobalContext();
 
   const [query, setQuery] = useState("");
-  //  const urlQuery = `&query=${query}`;
+
+  const searchImages = (e) => {
+    let searchText = e.target.value;
+    setQuery(searchText);
+    // fetchImages(query);
+  }
+
+  useEffect(() => {
+    fetchImages(query);
+  }, [query])
+
   const handleSubmit = () => {
     fetchImages();
   };
@@ -26,11 +36,11 @@ const Navbar = () => {
         <div className="search__container">
           <BsSearch className="search__icon" />
           <input
-            type="text"
+            type="text" 
             className="input__search"
             placeholder="Search free high-resolution photos"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={searchImages}
           />
           <button type="submit" onClick={handleSubmit}>
             <IoMdQrScanner className="search__icon" />

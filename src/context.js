@@ -16,26 +16,40 @@ const AppProvider = ({ children }) => {
     return query;
   };
 
+
   const urlPage = `&page=${page}`;
-  const fetchImages = async () => {
+  const fetchImages = async (searchValue = '') => {
     setLoading(true);
     let url;
     // const urlPage = `&page=${page}`;
     // const urlPage = `&page=${page}`;
 
-    if (queryUrl) {
-      url = `${searchUrl}${API_KEY}${urlPage}${queryUrl}`;
+    if(searchValue) {
+      url = `https://api.unsplash.com/search/photos?query=${searchValue}&client_id=a5H5vopM5HqSw56aHl97IIF17f1QNwrP4gxpl5B4wjI`;
+
     } else {
-      url = `${mainUrl}${API_KEY}${urlPage}`;
+    //   if (queryUrl) {
+    //    url = `${searchUrl}${API_KEY}${urlPage}${queryUrl}`;
+    //  } else {
+       url = `${mainUrl}${API_KEY}${urlPage}`;
+    //  }
     }
-    url = `${mainUrl}${API_KEY}${urlPage}`;
+
+    // url = `${mainUrl}${API_KEY}${urlPage}`;
     console.log(url);
 
     const response = await fetch(url);
-    const data = await response.json();
-    setPhotos((oldPhotos) => {
-      return [...oldPhotos, ...data];
-    });
+    
+    let data = await response.json();
+    if(data.results) {
+      data = data.results;
+      setPhotos(data);
+    } else {
+      setPhotos((oldPhotos) => {
+        return [...oldPhotos, ...data];
+      });
+    }
+
     setLoading(false);
     // console.log(data);
   };

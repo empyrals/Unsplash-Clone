@@ -14,7 +14,7 @@ const Photo = () => {
 
   // const fetchImages = async () => {
   //   setLoading(true);
-  //   let url;
+  //   let url; 
   //   const urlPage = `&page=${page}`;
   //   url = `${mainUrl}${API_KEY}${urlPage}`;
   //   const response = await fetch(url);
@@ -46,8 +46,8 @@ const Photo = () => {
   return (
     <main>
       <div className="photos">
-        {photos.map((image) => {
-          return <SinglePhoto key={image.id} {...image} />;
+        {photos.map((image, index) => {
+          return <SinglePhoto key={index.toString()} {...image} />;
         })}
       </div>
       {loading && <h2>Loading...</h2>}
